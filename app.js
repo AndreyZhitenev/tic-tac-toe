@@ -1,8 +1,9 @@
 let game = document.querySelector('.game'),
 	res = document.querySelector('.res'),
 	btnGame = document.querySelector('.new-game'),
-	fields = document.querySelector('.field'),
+	fields = document.querySelectorAll('.field'),
 	step = false,
+	count = 0,
 	circle = `<svg class="circle">
 		<circle
 			r="45"
@@ -43,6 +44,7 @@ function stepCross(target) {
 	target.classList.add('x')
 	let crossAudio = new Audio('audio/cross.mp3')
 	crossAudio.play()
+	count++
 }
 
 function stepZero(target) {
@@ -50,6 +52,7 @@ function stepZero(target) {
 	target.classList.add('o')
 	let circleAudio = new Audio('audio/zero.mp3')
 	circleAudio.play()
+	count++
 }
 
 function init(e) {
@@ -59,7 +62,16 @@ function init(e) {
 	win()
 }
 
-function newGame() {}
+function newGame() {
+	step = false
+	count = 0
+	res.innerText = ''
+	fields.forEach(item => {
+		item.innerHTML = ''
+		item.classList.remove('x', 'o', 'active')
+	})
+	game.addEventListener('click', init)
+}
 
 function win() {
 	let comb = [
@@ -85,6 +97,22 @@ function win() {
 				fields[comb[i][2]].classList.add('active')
 				res.innerHTML = 'X is winner!'
 			}, 1500)
+			game.removeEventListener('click', init)
+		} else if (
+			fields[comb[i][0]].classList.contains('o') &&
+			fields[comb[i][1]].classList.contains('o') &&
+			fields[comb[i][2]].classList.contains('o')
+		) {
+			setTimeout(() => {
+				fields[comb[i][0]].classList.add('active')
+				fields[comb[i][1]].classList.add('active')
+				fields[comb[i][2]].classList.add('active')
+				res.innerHTML = 'O is winner!'
+			}, 1500)
+			game.removeEventListener('click', init)
+		} else if (count == 9) {
+			res.innerHTML = 'Draw'
+			game.removeEventListener('click', init)
 		}
 	}
 }

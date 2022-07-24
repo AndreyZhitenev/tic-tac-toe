@@ -1,7 +1,7 @@
-let game = document.querySelector('.game'),
-	res = document.querySelector('.res'),
-	btnGame = document.querySelector('.new-game'),
-	fields = document.querySelectorAll('.field'),
+let game = document.querySelector(".game"),
+	res = document.querySelector(".res"),
+	btnGame = document.querySelector(".new-game"),
+	fields = document.querySelectorAll(".field"),
 	step = false,
 	count = 0,
 	circle = `<svg class="circle">
@@ -9,7 +9,7 @@ let game = document.querySelector('.game'),
 			r="45"
 			cx="58"
 			cy="58"
-			stroke="blue"
+			stroke="#fff"
 			stroke-width="10"
 			fill="none"
 			stroke-linecap="round"
@@ -23,7 +23,7 @@ let game = document.querySelector('.game'),
 			y1="15"
 			x2="100"
 			y2="100"
-			stroke="red"
+			stroke="#fff"
 			stroke-width="10"
 			stroke-linecap="round"
 		/>
@@ -33,44 +33,44 @@ let game = document.querySelector('.game'),
 			y1="15"
 			x2="15"
 			y2="100"
-			stroke="red"
+			stroke="#fff"
 			stroke-width="10"
 			stroke-linecap="round"
 		/>
-	</svg>`
+	</svg>`;
 
 function stepCross(target) {
-	target.innerHTML = cross
-	target.classList.add('x')
-	let crossAudio = new Audio('audio/cross.mp3')
-	crossAudio.play()
-	count++
+	target.innerHTML = cross;
+	target.classList.add("x");
+	let crossAudio = new Audio("audio/cross.mp3");
+	crossAudio.play();
+	count++;
 }
 
 function stepZero(target) {
-	target.innerHTML = circle
-	target.classList.add('o')
-	let circleAudio = new Audio('audio/zero.mp3')
-	circleAudio.play()
-	count++
+	target.innerHTML = circle;
+	target.classList.add("o");
+	let circleAudio = new Audio("audio/zero.mp3");
+	circleAudio.play();
+	count++;
 }
 
 function init(e) {
-	if (!step) stepCross(e.target)
-	else stepZero(e.target)
-	step = !step
-	win()
+	if (!step) stepCross(e.target);
+	else stepZero(e.target);
+	step = !step;
+	win();
 }
 
 function newGame() {
-	step = false
-	count = 0
-	res.innerText = ''
-	fields.forEach(item => {
-		item.innerHTML = ''
-		item.classList.remove('x', 'o', 'active')
-	})
-	game.addEventListener('click', init)
+	step = false;
+	count = 0;
+	res.innerText = "";
+	fields.forEach((item) => {
+		item.innerHTML = "";
+		item.classList.remove("x", "o", "active");
+	});
+	game.addEventListener("click", init);
 }
 
 function win() {
@@ -83,39 +83,39 @@ function win() {
 		[2, 5, 8],
 		[0, 4, 8],
 		[2, 4, 6],
-	]
+	];
 
 	for (let i = 0; i < comb.length; i++) {
 		if (
-			fields[comb[i][0]].classList.contains('x') &&
-			fields[comb[i][1]].classList.contains('x') &&
-			fields[comb[i][2]].classList.contains('x')
+			fields[comb[i][0]].classList.contains("x") &&
+			fields[comb[i][1]].classList.contains("x") &&
+			fields[comb[i][2]].classList.contains("x")
 		) {
 			setTimeout(() => {
-				fields[comb[i][0]].classList.add('active')
-				fields[comb[i][1]].classList.add('active')
-				fields[comb[i][2]].classList.add('active')
-				res.innerHTML = 'X is winner!'
-			}, 1500)
-			game.removeEventListener('click', init)
+				fields[comb[i][0]].classList.add("active");
+				fields[comb[i][1]].classList.add("active");
+				fields[comb[i][2]].classList.add("active");
+				res.innerHTML = "X is winner!";
+			}, 1500);
+			game.removeEventListener("click", init);
 		} else if (
-			fields[comb[i][0]].classList.contains('o') &&
-			fields[comb[i][1]].classList.contains('o') &&
-			fields[comb[i][2]].classList.contains('o')
+			fields[comb[i][0]].classList.contains("o") &&
+			fields[comb[i][1]].classList.contains("o") &&
+			fields[comb[i][2]].classList.contains("o")
 		) {
 			setTimeout(() => {
-				fields[comb[i][0]].classList.add('active')
-				fields[comb[i][1]].classList.add('active')
-				fields[comb[i][2]].classList.add('active')
-				res.innerHTML = 'O is winner!'
-			}, 1500)
-			game.removeEventListener('click', init)
+				fields[comb[i][0]].classList.add("active");
+				fields[comb[i][1]].classList.add("active");
+				fields[comb[i][2]].classList.add("active");
+				res.innerHTML = "O is winner!";
+			}, 1500);
+			game.removeEventListener("click", init);
 		} else if (count == 9) {
-			res.innerHTML = 'Draw'
-			game.removeEventListener('click', init)
+			res.innerHTML = "Draw";
+			game.removeEventListener("click", init);
 		}
 	}
 }
 
-btnGame.addEventListener('click', newGame)
-game.addEventListener('click', init)
+btnGame.addEventListener("click", newGame);
+game.addEventListener("click", init);

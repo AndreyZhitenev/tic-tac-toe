@@ -1,5 +1,6 @@
 * {
 	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -8,16 +9,19 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	background: linear-gradient(rgba(0, 0, 0, 0.4), transparent 1px),
-		linear-gradient(90deg, rgba(0, 0, 0, 0.4), transparent 1px);
-	background-size: 30px 30px;
+}
+
+.res,
+.game,
+.field,
+.new-game {
+	z-index: 1;
 }
 
 .res {
-	color: green;
+	color: #fff;
 	font-weight: bold;
 	font-size: 40px;
-	font-family: Arial;
 	height: 50px;
 }
 
@@ -27,28 +31,28 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	margin: 30px 0;
-	outline: 3px solid #000;
+	outline: 3px solid #eee;
 }
 
 .field {
 	width: 120px;
 	height: 120px;
-	border: 2px solid #000;
+	border: 2px solid #eee;
 	cursor: pointer;
 }
 
 .new-game {
 	border: none;
-	color: #fff;
-	background: green;
+	color: #111;
+	background: #eee;
 	padding: 10px 16px;
 	font-size: 20px;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
-.active {
-	background: rgba(0, 255, 0, 0.5);
+.active svg {
+	stroke: #fff;
 }
 
 .circle {

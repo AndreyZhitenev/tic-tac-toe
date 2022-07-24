@@ -1,1 +1,1 @@
-# [Play](https://andreyzhitenev.github.io/tic-tac-toe)
+# [Play](https://twiar.github.io/tic-tac-toe)

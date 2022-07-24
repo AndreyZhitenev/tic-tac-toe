@@ -24,22 +24,26 @@ const cells = document.querySelectorAll(".cell");
 startGame();
 
 function startGame() {
-	document.querySelector(".endgame").style.display = "none";
+	document.querySelector(".endgame").style.visibility = "hidden";
+	document.querySelector(".endgame").style.opacity = "0";
 	origBoard = Array.from(Array(9).keys());
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].innerText = "";
-		cells[i].style.removeProperty("background-color");
 		cells[i].addEventListener("click", turnClick, false);
 	}
 }
 
 function turnClick(square) {
-	turn(square.target.id, huPlayer);
+	if (typeof origBoard[square.target.id] == "number") {
+		turn(square.target.id, huPlayer);
+		if (!checkTie()) turn(bestSpot(), aiPlayer);
+	}
 }
 
 function turn(squareId, player) {
 	origBoard[squareId] = player;
 	document.getElementById(squareId).innerHTML = player;
+	touchSound.play();
 	let gameWon = checkWin(origBoard, player);
 	if (gameWon) gameOver(gameWon);
 }
@@ -59,9 +63,44 @@ function checkWin(board, player) {
 function gameOver(gameWon) {
 	for (let index of winCombos[gameWon.index]) {
 		document.getElementById(index).querySelector("path").style.fill =
-			gameWon.player == huPlayer ? "hsla(211.27deg, 100%, 50%, 0.9)" : "white";
+			gameWon.player == huPlayer ? "hsla(211.27deg, 100%, 50%, 0.9)" : "rgba(255, 0, 0, 0.9)";
 	}
 	for (let i = 0; i < cells.length; i++) {
 		cells[i].removeEventListener("click", turnClick, false);
 	}
+	if (gameWon.player == huPlayer) {
+		declareWinner("You win!", "hsla(211.27deg, 100%, 50%, 0.9)");
+		winSound.play();
+	} else {
+		declareWinner("You lose.", "rgba(255, 0, 0, 0.9)");
+		loseSound.play();
+	}
+}
+
+function declareWinner(who, color) {
+	document.querySelector(".endgame").style.visibility = "visible";
+	document.querySelector(".endgame").style.opacity = "1";
+
+	document.querySelector(".endgame .text").innerText = who;
+	document.querySelector(".endgame .text").style.color = color;
+}
+
+function emptySquares() {
+	return origBoard.filter((s) => typeof s == "number");
+}
+
+function bestSpot() {
+	return emptySquares()[0];
+}
+
+function checkTie() {
+	if (emptySquares().length == 0) {
+		for (let i = 0; i < cells.length; i++) {
+			cells[i].querySelector("path").style.fill = "#aaaaaa";
+			cells[i].removeEventListener("click", turnClick, false);
+		}
+		declareWinner("Tie Game!", "#aaaaaa");
+		return true;
+	}
+	return false;
 }

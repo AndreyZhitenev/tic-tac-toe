@@ -23,19 +23,22 @@ button {
 }
 
 .endgame {
-	width: 200px;
+	width: 360px;
 	top: 40%;
 	background-color: #fff;
 	position: absolute;
-	left: 50%;
-	margin-left: -100px;
+	left: calc(50%-180px);
 	padding-top: 50px;
 	padding-bottom: 50px;
 	text-align: center;
 	border-radius: 5px;
 	color: hsla(211.27deg, 100%, 50%, 0.9);
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 1em;
+	z-index: 2;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 table {
@@ -64,6 +67,12 @@ td {
 	height: 160px;
 	border: 3px solid rgb(255, 255, 255);
 	cursor: pointer;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 
 button {
@@ -74,6 +83,7 @@ button {
 	font-size: 20px;
 	border-radius: 5px;
 	cursor: pointer;
+	margin-top: 10px;
 }
 
 .circle,
@@ -89,5 +99,23 @@ button {
 	}
 	100% {
 		transform: scale(1);
+	}
+}
+
+@media screen and (max-width: 720px) {
+	td {
+		width: 120px;
+		height: 120px;
+	}
+
+	.circle,
+	.cross {
+		height: 90px;
+	}
+
+	.endgame {
+		width: 240px;
+		font-size: 0.67em;
+		left: calc(50%-120px);
 	}
 }
